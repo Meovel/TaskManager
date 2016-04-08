@@ -1,0 +1,47 @@
+<div class="list" ng-controller='TaskController'>
+  <h1 class="page-title">Task List</h1>
+  <a href="#/tasks/new" class="button">Add Task</a>
+  <div>
+    <span>Show: </span>
+    <select ng-model="filter" ng-options="opt as opt.label for opt in whereFilters"></select>
+
+    <input type="radio" ng-model="sort" value="1"> Ascending
+    <input type="radio" ng-model="sort" value="-1"> Descending
+  </div>
+  <div ng-hide="tasks && tasks.length > 0">No tasks found.</div>
+  <div ng-show="tasks && tasks.length > 0">
+    <button type="button" ng-click="prevPage()">Previous Page</button>
+    <button type="button" ng-click="nextPage()">Next Page</button>
+    <span>Page <span ng-bind="(currentPage + 1) | number: 0"></span> of <span ng-bind="maxPage"></span></span>
+    <table>
+      <thead>
+      <tr>
+        <th>Task Name</th>
+        <th>Status</th>
+        <th>Assigned User</th>
+        <th>Delete Task</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="task in tasks">
+        <td>
+          <a ng-href="#/task/{{task._id}}" ng-bind="task.name"></a>
+        </td>
+        <td>
+          <span ng-if="task.completed">Completed</span>
+          <span ng-if="!task.completed && task.assignedUserName === 'unassigned'">Unassigned</span>
+          <span ng-if="!task.completed && task.assignedUserName !== 'unassigned'">Pending</span>
+        </td>
+        <td>
+          <a ng-href="#/user/{{task.assignedUser}}" ng-bind="task.assignedUserName" ng-show="task.assignedUser"></a>
+          <span ng-hide="task.assignedUser">n/a</span>
+        </td>
+        <td>
+          <a href="" class="button" ng-click="deleteTask(task._id, task.assignedUser)">Delete</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

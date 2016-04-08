@@ -1,0 +1,20 @@
+<div class="list" ng-controller='UserController'>
+    <h1>User List</h1>
+
+    <a href="#/users/add" class="hollow button useraddbtn">Add</a>
+    <hr />
+
+    <div ng-hide="users">
+        <h2 class="warn">No user data available.</h2>
+    </div>
+
+    <div ng-show="users">
+        <div class="row">
+            <div ng-repeat="user in users" class="small-12 medium-6 large-4 columns">
+                <a ng-href="#/user/{{user._id}}" ng-bind="user.name"></a>
+                <button class="tiny hollow alert button userdelbtn" ng-click="deleteUser(user._id)">Remove</button>
+            </div>
+        </div>
+    </div>
+
+</div>
