@@ -4,9 +4,7 @@ mp4Services.factory('Users', function($http, $window){
     return {
         get : function(params) {
             var baseUrl = $window.sessionStorage.baseurl;
-            return $http.get(baseUrl + '/tasks', {
-                //params: params
-            });
+            return $http.get(baseUrl + '/tasks');
         },
         create: function(data) {
             var baseUrl = $window.sessionStorage.baseurl;
