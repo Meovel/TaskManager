@@ -1,0 +1,9 @@
+<div id="addUser" ng-controller='UserCreateController'>
+    <h1>Add User</h1>
+    <hr />
+    <form ng-submit="submitForm()">
+        <input required placeholder="Name" type="text" name="name" ng-model="newUser.name" ng-class="{ 'error': nameError }">
+        <input required placeholder="E-mail" type="email" name="email" ng-model="newUser.email" ng-class="{ 'error': emailError }">
+        <button type="submit" class="button submitbtn">Submit</button>
+    </form>
+</div>

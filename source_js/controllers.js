@@ -1,11 +1,17 @@
 var mp4Controllers = angular.module('mp4Controllers', []);
 
+var checkAPI = function () {
+  if (window.sessionStorage.baseurl) {
+    return true
+  } else {
+    alert("API URL not set");
+    return false
+  }
+}
+
 mp4Controllers.controller('UserController', ['$scope', '$http', '$window', 'Users', 'Tasks',
   function($scope, $http, $window, Users, Tasks) {
-
-    if (!$window.sessionStorage.baseurl) {
-      alert("API URL not set")
-    } else {
+    if (checkAPI()) {
       update();
 
       function update() {
@@ -26,10 +32,10 @@ mp4Controllers.controller('UserController', ['$scope', '$http', '$window', 'User
             var success = true;
 
             for (var t in tasks) {
-              t.assignedUser = '';
               t.assignedUserName = 'unassigned';
+              t.assignedUser = '';
 
-              var update = Tasks.update(t._id,t).error(
+              var update = Tasks.update(t._id, t).error(
                   function(data) {
                     success = false;
                   });
@@ -44,6 +50,20 @@ mp4Controllers.controller('UserController', ['$scope', '$http', '$window', 'User
           }).error(function(e) {alert("* Fail to get related tasks")});
 
         }).error(function(e) {alert("* Delete failed")});
+      };
+    }
+  }
+]);
+
+mp4Controllers.controller('UserCreateController', ['$scope', '$http', '$window', 'Users',
+  function($scope, $http, $window, Users) {
+    if (checkAPI()) {
+      $scope.newUser = {name: '', email: ''};
+
+      $scope.submitForm = function() {
+          Users.create($scope.newUser).success(function(data) {
+            alert(data.message);
+          }).error(alert("Add user failed"));
       };
     }
   }

@@ -16,3 +16,16 @@ h1 {
 .userdelbtn {
   float: right;
 }
+
+#addUser {
+  input {
+    width: 50%;
+    margin-left: 25%;
+  }
+
+  .submitbtn {
+    margin-left:47%;
+    margin-right:50%;
+    position: relative;
+  }
+}
