@@ -124,15 +124,16 @@ mp4Controllers.controller('UserDetailsController', ['$scope', '$routeParams', '$
   }
 ]);
 
-mp4Controllers.controller('TaskController', ['$scope', 'CommonData' , function($scope, CommonData) {
-  $scope.data = "";
 
-  $scope.getData = function(){
-    $scope.data = CommonData.getData();
-
-  };
-
-}]);
+mp4Controllers.controller('TaskDetailsController', ['$scope', '$routeParams', '$http', '$window', 'Tasks',
+  function($scope, $routeParams, $http, $window, Tasks) {
+    if (checkAPI()) {
+      Tasks.get($routeParams.taskId).success(function(data) {
+        $scope.task = data.data;
+      }).error(function(e) {alert(e.message)});
+    }
+  }
+]);
 
 
 mp4Controllers.controller('LlamaListController', ['$scope', '$http', 'Llamas', '$window' , function($scope, $http,  Llamas, $window) {

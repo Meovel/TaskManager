@@ -1,0 +1,40 @@
+<div id="taskdetail">
+    <h1 ng-bind="task.name" ng-show="task"></h1>
+
+    <div ng-hide="task">
+        Task not exist
+    </div>
+    <hr />
+
+    <div class="detailbody" ng-show="task">
+        <button href="#/task/{{task._id}}/edit" class="button">Edit Task</button>
+        <table>
+            <tbody>
+            <tr>
+                <td>Assigned User</td>
+                <td>
+                    <a ng-href="#/user/{{task.assignedUserId}}"><span ng-bind="task.assignedUserName"></span></a>
+                </td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td>
+                    <span ng-bind="task.description"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Deadline</td>
+                <td>
+                    <span ng-bind="task.deadline"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td>
+                    <span ng-bind="task.completed"></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
