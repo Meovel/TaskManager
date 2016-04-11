@@ -7,13 +7,18 @@
     <hr />
 
     <div class="detailbody" ng-show="task">
-        <button href="#/task/{{task._id}}/edit" class="button">Edit Task</button>
+        <button href="#/task/{{task._id}}/edit" class="button">Edit</button>
         <table>
             <tbody>
             <tr>
                 <td>Assigned User</td>
                 <td>
-                    <a ng-href="#/user/{{task.assignedUserId}}"><span ng-bind="task.assignedUserName"></span></a>
+                    <span ng-if="task.assignedUserName !== 'unassigned'">
+                        <a ng-href="#/user/{{task.assignedUserId}}"><span ng-bind="task.assignedUserName"></span></a>
+                    </span>
+                    <span ng-if="task.assignedUserName === 'unassigned'">
+                        * UNASSIGNED
+                    </span>
                 </td>
             </tr>
             <tr>

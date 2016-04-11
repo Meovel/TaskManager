@@ -1,25 +1,45 @@
-<div class="list" ng-controller='TaskController'>
-  <h1 class="page-title">Task List</h1>
-  <a href="#/tasks/new" class="button">Add Task</a>
-  <div>
-    <span>Show: </span>
-    <select ng-model="filter" ng-options="opt as opt.label for opt in whereFilters"></select>
+<div id="tasklist">
+  <h1>Task List</h1>
+  <button href="#/task/new" class="hollow button useraddbtn">Add</button>
+  <hr />
 
-    <input type="radio" ng-model="sort" value="1"> Ascending
-    <input type="radio" ng-model="sort" value="-1"> Descending
+  <div class="listbody">
+  <div class="row">
+    <div class="small-6 medium-8 large-5 columns">
+      <div class="row">
+        <div class="small-12 medium-4 large-4 columns">
+          <input type="radio" ng-model="filterMode" value="0"> All
+        </div>
+        <div class="small-12 medium-4 large-4 columns">
+          <input type="radio" ng-model="filterMode" value="1"> Completed
+        </div>
+        <div class="small-12 medium-4 large-4 columns">
+          <input type="radio" ng-model="filterMode" value="2"> Pending
+        </div>
+      </div>
+    </div>
+    <div class="small-6 medium-4 large-7 columns" style="float: right">
+      <div class="row">
+        <div class="small-1 medium-2 large-4 columns"> &nbsp; </div>
+        <div class="small-12 medium-6 large-4 columns">
+          <select ng-model="sortAtr" ng-options="e as e for e in sortAtrs"></select>
+        </div>
+        <div class="small-12 medium-4 large-4 columns">
+          <input type="radio" ng-model="sort" value="1"> ↑
+          <input type="radio" ng-model="sort" value="-1"> ↓
+        </div>
+      </div>
+    </div>
   </div>
-  <div ng-hide="tasks && tasks.length > 0">No tasks found.</div>
+  <div ng-hide="tasks && tasks.length > 0">No task</div>
   <div ng-show="tasks && tasks.length > 0">
-    <button type="button" ng-click="prevPage()">Previous Page</button>
-    <button type="button" ng-click="nextPage()">Next Page</button>
-    <span>Page <span ng-bind="(currentPage + 1) | number: 0"></span> of <span ng-bind="maxPage"></span></span>
     <table>
       <thead>
       <tr>
-        <th>Task Name</th>
+        <th>Name</th>
         <th>Status</th>
         <th>Assigned User</th>
-        <th>Delete Task</th>
+        <th></th>
       </tr>
       </thead>
       <tbody>
@@ -28,20 +48,30 @@
           <a ng-href="#/task/{{task._id}}" ng-bind="task.name"></a>
         </td>
         <td>
-          <span ng-if="task.completed">Completed</span>
-          <span ng-if="!task.completed && task.assignedUserName === 'unassigned'">Unassigned</span>
+          <span ng-if="task.completed">COMPLETED</span>
           <span ng-if="!task.completed && task.assignedUserName !== 'unassigned'">Pending</span>
+          <span ng-if="!task.completed && task.assignedUserName === 'unassigned'">Unassigned</span>
         </td>
         <td>
-          <a ng-href="#/user/{{task.assignedUser}}" ng-bind="task.assignedUserName" ng-show="task.assignedUser"></a>
-          <span ng-hide="task.assignedUser">n/a</span>
+          <span ng-if="task.assignedUserName !== 'unassigned'">
+            <a ng-href="#/user/{{task.assignedUser}}" ng-bind="task.assignedUserName" ng-show="task.assignedUser"></a>
+          </span>
+          <span ng-if="task.completed && task.assignedUserName === 'unassigned'">
+            unknown
+          </span>
         </td>
         <td>
-          <a href="" class="button" ng-click="deleteTask(task._id, task.assignedUser)">Delete</a>
+          <a href="" class="hollow alert button" ng-click="deleteTask(task._id, task.assignedUser)">Delete</a>
         </td>
       </tr>
       </tbody>
     </table>
+    <div class="position">
+      <button type="button" class="button" ng-click="prevPage()">PREV</button>
+      <button type="button" class="button" ng-click="nextPage()">NEXT</button>
+      <br />
+      <span ng-bind="(currentPage + 1) | number: 0"></span> / <span ng-bind="maxPage"></span>
+    </div>
   </div>
-
+  </div>
 </div>

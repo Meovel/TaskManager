@@ -9,6 +9,7 @@ var checkAPI = function () {
   }
 }
 
+// User related controller
 mp4Controllers.controller('UserController', ['$scope', '$http', '$window', 'Users', 'Tasks',
   function($scope, $http, $window, Users, Tasks) {
     if (checkAPI()) {
@@ -125,6 +126,132 @@ mp4Controllers.controller('UserDetailsController', ['$scope', '$routeParams', '$
 ]);
 
 
+// Task related controller
+mp4Controllers.controller('TaskController', ['$scope', '$http', '$window', 'Users', 'Tasks',
+  function($scope, $http, $window, Users, Tasks) {
+    if (checkAPI()) {
+      update();
+      $scope.currentPage = 0;
+      $scope.perPage = 10;
+      $scope.filterMode = 2;
+      $scope.sort = 1;
+      $scope.sortAtrs = ["Name", "User", "Date", "Deadline"];
+      $scope.sortAtr = $scope.sortAtrs[0];
+
+      $scope.nextPage = function() {
+        $scope.currentPage = ($scope.currentPage + 1) % $scope.maxPage;
+        update();
+      };
+
+      $scope.prevPage = function() {
+        $scope.currentPage = ($scope.currentPage + $scope.maxPage - 1) % $scope.maxPage;
+        update();
+      };
+
+      function update() {
+        Tasks.getAll({where: $scope.filter, count: true}).success(function(data) {
+          $scope.maxPage = Math.ceil(data.data / $scope.perPage);
+
+          if ($scope.sortAtr === 'Name') {
+            Tasks.getAll({
+              where: $scope.filter,
+              sort: {name: $scope.sort},
+              skip: $scope.perPage * $scope.currentPage,
+              limit: $scope.perPage
+            }).success(function (data) {
+              $scope.tasks = data.data;
+            }).error(function (e) {
+              alert(e.message)
+            });
+          } else if ($scope.sortAtr === 'User') {
+            Tasks.getAll({
+              where: $scope.filter,
+              sort: {assignedUserName: $scope.sort},
+              skip: $scope.perPage * $scope.currentPage,
+              limit: $scope.perPage
+            }).success(function (data) {
+              $scope.tasks = data.data;
+            }).error(function (e) {
+              alert(e.message)
+            });
+          } else if ($scope.sortAtr === 'Date') {
+            Tasks.getAll({
+              where: $scope.filter,
+              sort: {dateCreated: $scope.sort},
+              skip: $scope.perPage * $scope.currentPage,
+              limit: $scope.perPage
+            }).success(function (data) {
+              $scope.tasks = data.data;
+            }).error(function (e) {
+              alert(e.message)
+            });
+          } else {
+            Tasks.getAll({
+              where: $scope.filter,
+              sort: {deadline: $scope.sort},
+              skip: $scope.perPage * $scope.currentPage,
+              limit: $scope.perPage
+            }).success(function (data) {
+              $scope.tasks = data.data;
+            }).error(function (e) {
+              alert(e.message)
+            });
+          }
+        }).error(function(e) {alert(e.message)});
+      }
+
+      $scope.deleteTask = function(id, userId) {
+        Tasks.delete(id).success(function(data) {
+          if (userId) {
+
+            Users.get(userId).success(function(data) {
+              var user = data.data;
+              var index = user.pendingTasks.indexOf(id);
+              if (index !== -1) {
+                user.pendingTasks.splice(index, 1);
+
+                Users.update(userId, user).success(function(data) {
+                  update();
+                }).error(function(e) {alert(e.message)});
+              }
+            }).error(function(e) {alert(e.message)});
+          } else {
+            update();
+          }
+        }).error(function(e) {alert(e.message)});
+      };
+
+      $scope.$watch('filterMode', function(now, past) {
+        if (now !== past) {
+          if (now === '0') {
+            $scope.filter = {}
+          } else if (now === '1') {
+            $scope.filter = { completed: true }
+          } else {
+            $scope.filter = { completed: false }
+          }
+          $scope.currentPage = 0;
+          update();
+        }
+      });
+
+      $scope.$watch('sortAtr', function(now, past) {
+        if (now !== past) {
+          $scope.currentPage = 0;
+          update();
+        }
+      });
+
+      $scope.$watch('sort', function(now, past) {
+        if (now !== past) {
+          $scope.currentPage = 0;
+          update();
+        }
+      });
+    }
+  }
+]);
+
 mp4Controllers.controller('TaskDetailsController', ['$scope', '$routeParams', '$http', '$window', 'Tasks',
   function($scope, $routeParams, $http, $window, Tasks) {
     if (checkAPI()) {
@@ -136,22 +263,12 @@ mp4Controllers.controller('TaskDetailsController', ['$scope', '$routeParams', '$
 ]);
 
 
-mp4Controllers.controller('LlamaListController', ['$scope', '$http', 'Llamas', '$window' , function($scope, $http,  Llamas, $window) {
-
-  Llamas.get().success(function(data){
-    $scope.llamas = data;
-  });
-
-
-}]);
-
+// Setting
 mp4Controllers.controller('SettingsController', ['$scope' , '$window' , function($scope, $window) {
   $scope.url = $window.sessionStorage.baseurl;
 
   $scope.setUrl = function(){
     $window.sessionStorage.baseurl = $scope.url;
     $scope.displayText = "URL set: " + $window.sessionStorage.baseurl;
-
   };
-
 }]);

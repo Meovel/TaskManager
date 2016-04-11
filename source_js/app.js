@@ -22,6 +22,10 @@ app.config(['$routeProvider', function($routeProvider) {
       templateUrl: 'partials/task.html',
       controller: 'TaskDetailsController'
     }).
+    when('/task/new', {
+      templateUrl: 'partials/addtask.html',
+      controller: 'TaskCreateController'
+    }).
     when('/settings', {
       templateUrl: 'partials/settings.html',
       controller: 'SettingsController'

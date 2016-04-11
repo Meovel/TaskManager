@@ -54,6 +54,21 @@ h5 {
   }
 }
 
+#tasklist {
+  .listbody {
+    width: 80%;
+    margin-left: 10%;
+
+    select {
+      float: right;
+    }
+
+    .position {
+      text-align: center;
+    }
+  }
+}
+
 #taskdetail {
   .detailbody {
     width: 80%;
