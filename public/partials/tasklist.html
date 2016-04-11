@@ -31,7 +31,9 @@
       </div>
     </div>
   </div>
-  <div ng-hide="tasks && tasks.length > 0">No task</div>
+  <div ng-hide="tasks && tasks.length > 0">
+    <button class="secondary hollow button useraddbtn">No task found</button>
+  </div>
   <div ng-show="tasks && tasks.length > 0">
     <table>
       <thead>
