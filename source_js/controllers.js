@@ -47,9 +47,9 @@ mp4Controllers.controller('UserController', ['$scope', '$http', '$window', 'User
               }
             }
 
-          }).error(function(e) {alert("* Fail to get related tasks")});
+          }).error(function(e) {alert(e.message)});
 
-        }).error(function(e) {alert("* Delete failed")});
+        }).error(function(e) {alert(e.message)});
       };
     }
   }
@@ -63,7 +63,7 @@ mp4Controllers.controller('UserCreateController', ['$scope', '$http', '$window',
       $scope.submitForm = function() {
           Users.create($scope.newUser).success(function(data) {
             alert(data.message);
-          }).error(alert("Add user failed"));
+          }).error(function(e) {alert(e.message)});
       };
     }
   }
@@ -87,9 +87,9 @@ mp4Controllers.controller('UserDetailsController', ['$scope', '$routeParams', '$
             where: {_id: { $in: $scope.tasks }}
           }).success(function(data) {
             $scope.pendingTasks = data.data;
-          })
+          }).error(function(e) {alert(e.message)});
 
-        })
+        }).error(function(e) {alert(e.message)});
       }
 
       $scope.markAsComplete = function(taskId) {
@@ -104,9 +104,9 @@ mp4Controllers.controller('UserDetailsController', ['$scope', '$routeParams', '$
               $scope.user.pendingTasks = $scope.tasks;
               Users.update(userId, $scope.user).success(function(data) {
                 update();
-              })
+              }).error(function(e) {alert(e.message)});
             }
-          })
+          }).error(function(e) {alert(e.message)});
         })
       };
 
@@ -118,7 +118,7 @@ mp4Controllers.controller('UserDetailsController', ['$scope', '$routeParams', '$
           }
         }).success(function(data) {
           $scope.completedTasks = data.data;
-        })
+        }).error(function(e) {alert(e.message)});
       }
     }
   }
