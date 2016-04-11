@@ -3,6 +3,14 @@ h1 {
   text-align: center;
 }
 
+h3 {
+  text-align: center;
+}
+
+h5 {
+  text-align: center;
+}
+
 .warn{
   text-align: center;
   color: red;
@@ -27,5 +35,21 @@ h1 {
     margin-left:47%;
     margin-right:50%;
     position: relative;
+  }
+}
+
+#userdetail {
+  .notfoundbtn {
+    width: 80%;
+    margin-left: 10%;
+  }
+
+  table {
+    width: 80%;
+    margin-left: 10%;
+
+    button {
+      float: right
+    }
   }
 }

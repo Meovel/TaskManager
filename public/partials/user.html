@@ -1,0 +1,61 @@
+<div id="userdetail">
+    <h1 style="text-transform: uppercase" ng-show="user" ng-bind="user.name"></h1>
+
+    <div ng-hide="user">
+        User not exist
+    </div>
+
+    <div ng-show="user">
+        <h5 ng-bind="user.email"></h5>
+        <hr />
+
+        <h3>Pending Tasks</h3>
+        <button type="button" class="secondary hollow expanded button notfoundbtn" ng-hide="pendingTasks.length > 0">
+            No pending task
+        </button>
+        <table ng-show="pendingTasks.length > 0">
+            <thead>
+            <tr>
+                <th>Task</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="task in pendingTasks">
+                <td>
+                    <a ng-href="#/task/{{task._id}}"><span ng-bind="task.name"></span></a>
+                </td>
+                <td>
+                    <button type="button" class="success button" ng-click="markAsComplete(task._id)">Complete</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <br />
+
+        <h3>Completed Tasks</h3>
+        <button type="button" class="secondary hollow expanded button notfoundbtn" ng-hide="completedTasks">
+            No task yet
+        </button>
+
+        <table ng-show="completedTasks && completedTasks.length > 0">
+            <thead>
+            <tr>
+                <th>Task</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="task in completedTasks">
+                <td>
+                    <a ng-href="#/task/{{task._id}}"><span ng-bind="task.name"></span></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <button type="button" class="warning button notfoundbtn" ng-click="getCompletedTasks()" ng-hide="completedTasks.length > 0">
+            Load ...
+        </button>
+    </div>
+</div>

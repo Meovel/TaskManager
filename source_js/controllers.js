@@ -15,7 +15,7 @@ mp4Controllers.controller('UserController', ['$scope', '$http', '$window', 'User
       update();
 
       function update() {
-        Users.get().success(function(data) {
+        Users.getAll().success(function(data) {
           $scope.users = data.data;
         }).error(function(e) {alert(e)});
       }
@@ -65,6 +65,61 @@ mp4Controllers.controller('UserCreateController', ['$scope', '$http', '$window',
             alert(data.message);
           }).error(alert("Add user failed"));
       };
+    }
+  }
+]);
+
+mp4Controllers.controller('UserDetailsController', ['$scope', '$routeParams', '$http', '$window', 'Users', 'Tasks',
+  function($scope, $routeParams, $http, $window, Users, Tasks) {
+    if (checkAPI()) {
+      update();
+      var userId = $routeParams.userId;
+
+      function update() {
+        var userId = $routeParams.userId;
+        Users.getOne(userId).success(function(data) {
+          var userData = data.data;
+          $scope.user = userData;
+          $scope.tasks = userData.pendingTasks;
+          $scope.completedTasks = [];
+
+          Tasks.get({
+            where: {_id: { $in: $scope.tasks }}
+          }).success(function(data) {
+            $scope.pendingTasks = data.data;
+          })
+
+        })
+      }
+
+      $scope.markAsComplete = function(taskId) {
+        Tasks.getOne(taskId).success(function(data) {
+          var task = data.data;
+          task.completed = true;
+
+          Tasks.complete(taskId, task).success(function(data) {
+            var index = $scope.tasks.indexOf(taskId);
+            if (index !== -1) {
+              $scope.tasks.splice(index, 1);
+              $scope.user.pendingTasks = $scope.tasks;
+              Users.update(userId, $scope.user).success(function(data) {
+                update();
+              })
+            }
+          })
+        })
+      };
+
+      $scope.getCompletedTasks = function() {
+        Tasks.get({
+          where: {
+            assignedUser: userId,
+            completed: true
+          }
+        }).success(function(data) {
+          $scope.completedTasks = data.data;
+        })
+      }
     }
   }
 ]);

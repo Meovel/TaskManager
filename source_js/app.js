@@ -6,11 +6,15 @@ app.config(['$routeProvider', function($routeProvider) {
       templateUrl: 'partials/userlist.html',
       controller: 'UserController'
     }).
+    when('/user/:userId', {
+      templateUrl: 'partials/user.html',
+      controller: 'UserDetailsController'
+    }).
     when('/user/add', {
       templateUrl: 'partials/addUser.html',
       controller: 'UserCreateController'
     }).
-      when('/task', {
+    when('/task', {
       templateUrl: 'partials/tasklist.html',
       controller: 'TaskController'
     }).
