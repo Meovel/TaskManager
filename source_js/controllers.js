@@ -23,7 +23,7 @@ mp4Controllers.controller('UserController', ['$scope', '$http', '$window', 'User
       $scope.deleteUser = function(id) {
 
         Users.delete(id).success(function(data) {
-          Tasks.get({where: {
+          Tasks.getAll({where: {
               assignedUser: id,
               completed: false
             }
@@ -77,13 +77,13 @@ mp4Controllers.controller('UserDetailsController', ['$scope', '$routeParams', '$
 
       function update() {
         var userId = $routeParams.userId;
-        Users.getOne(userId).success(function(data) {
+        Users.get(userId).success(function(data) {
           var userData = data.data;
           $scope.user = userData;
           $scope.tasks = userData.pendingTasks;
           $scope.completedTasks = [];
 
-          Tasks.get({
+          Tasks.getAll({
             where: {_id: { $in: $scope.tasks }}
           }).success(function(data) {
             $scope.pendingTasks = data.data;
@@ -93,7 +93,7 @@ mp4Controllers.controller('UserDetailsController', ['$scope', '$routeParams', '$
       }
 
       $scope.markAsComplete = function(taskId) {
-        Tasks.getOne(taskId).success(function(data) {
+        Tasks.get(taskId).success(function(data) {
           var task = data.data;
           task.completed = true;
 
@@ -111,7 +111,7 @@ mp4Controllers.controller('UserDetailsController', ['$scope', '$routeParams', '$
       };
 
       $scope.getCompletedTasks = function() {
-        Tasks.get({
+        Tasks.getAll({
           where: {
             assignedUser: userId,
             completed: true

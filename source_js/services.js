@@ -6,7 +6,7 @@ mp4Services.factory('Users', function($http, $window){
             var baseUrl = $window.sessionStorage.baseurl;
             return $http.get(baseUrl + '/users');
         },
-        getOne: function(id) {
+        get: function(id) {
             var baseUrl = $window.sessionStorage.baseurl;
             return $http.get(baseUrl + '/users/' + id);
         },
@@ -27,19 +27,19 @@ mp4Services.factory('Users', function($http, $window){
 
 mp4Services.factory('Tasks', function($http, $window) {
     return {
-        get : function(params) {
+        getAll : function(params) {
             var baseUrl = $window.sessionStorage.baseurl;
             return $http.get(baseUrl + '/tasks', {
                 params: params
             });
         },
+        get: function(id) {
+            var baseUrl = $window.sessionStorage.baseurl;
+            return $http.get(baseUrl + '/tasks/' + id);
+        },
         create: function(data) {
             var baseUrl = $window.sessionStorage.baseurl;
             return $http.post(baseUrl + '/tasks', data);
-        },
-        getOne: function(id) {
-            var baseUrl = $window.sessionStorage.baseurl;
-            return $http.get(baseUrl + '/tasks/' + id);
         },
         complete: function(id, data) {
             var baseUrl = $window.sessionStorage.baseurl;
