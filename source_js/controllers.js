@@ -262,6 +262,56 @@ mp4Controllers.controller('TaskDetailsController', ['$scope', '$routeParams', '$
   }
 ]);
 
+mp4Controllers.controller('TaskCreateController', ['$scope', '$http', '$window', 'Users', 'Tasks',
+  function($scope, $http, $window, Users, Tasks) {
+    if (checkAPI()) {
+      $scope.userList = [{name: "None", id: ""}];
+      $scope.assignedUser = $scope.userList[0];
+
+      $scope.$watch('assignedUser', function(past, now) {
+        if (now !== past) {
+          $scope.task.assignedUser = $scope.userSelected.id;
+          $scope.task.assignedUserName = $scope.userSelected.name;
+        }
+      });
+
+      $scope.submitForm = function() {
+        var newTask = $scope.task;
+          Tasks.create(newTask).success(function(data) {
+            if (newTask.assignedUserName !== 'unassigned') {
+
+              var userId = newTask.assignedUser;
+              Users.get(userId).success(function(data) {
+                var user = data.data;
+                user.pendingTasks.push(newTask._id);
+
+                Users.update(userId, user).success(function(data) {
+                  alert(data.message);
+                }).error(function(e) {alert(e.message)});
+              }).error(function(e) {alert(e.message)});
+            }
+          }).success(function(data) {alert(data.message);
+          }).error(function(e) {alert(e.message)});
+      };
+
+      Users.getAll().success(function(data) {
+        angular.forEach(data.data, function(user) {
+          $scope.userList.push({name: user.name, id: user._id});
+        });
+      }).error(function(e) {alert(e.message)});
+
+      $scope.task = {
+        name: '',
+        deadline: '',
+        completed: false,
+        description: '',
+        assignedUser: '',
+        assignedUserName: 'unassigned'
+      };
+    }
+  }
+]);
+
 
 // Setting
 mp4Controllers.controller('SettingsController', ['$scope' , '$window' , function($scope, $window) {

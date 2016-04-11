@@ -10,7 +10,7 @@ app.config(['$routeProvider', function($routeProvider) {
       templateUrl: 'partials/user.html',
       controller: 'UserDetailsController'
     }).
-    when('/user/add', {
+    when('/create/user', {
       templateUrl: 'partials/addUser.html',
       controller: 'UserCreateController'
     }).
@@ -22,8 +22,8 @@ app.config(['$routeProvider', function($routeProvider) {
       templateUrl: 'partials/task.html',
       controller: 'TaskDetailsController'
     }).
-    when('/task/new', {
-      templateUrl: 'partials/addtask.html',
+    when('/create/task', {
+      templateUrl: 'partials/addTask.html',
       controller: 'TaskCreateController'
     }).
     when('/settings', {

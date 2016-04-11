@@ -1,0 +1,22 @@
+<div id="addTask">
+    <h1>Add Task</h1>
+    <hr />
+
+    <div class="body">
+        <form ng-submit="submitForm()">
+            <input type="text" required name="name" placeholder="Name *" ng-model="task.name">
+
+            <input type="text" required datepicker name="deadline" placeholder="Deadline *" ng-model="task.deadline">
+
+            <textarea name="description" placeholder="Description" ng-model="task.description"></textarea>
+
+            <label>
+                <span>Assigned User</span>
+                <select ng-model="assignedUser" ng-options="e as e.name for e in userList"></select>
+            </label>
+            <br />
+            <span class="note">field with * must be completed</span>
+            <button type="submit" class="button submitbtn">Submit</button>
+        </form>
+    </div>
+</div>

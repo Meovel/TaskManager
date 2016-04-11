@@ -2,7 +2,7 @@ var mp4Services = angular.module('mp4Services', []);
 
 mp4Services.factory('Users', function($http, $window){
     return {
-        getAll : function(params) {
+        getAll : function(p) {
             var baseUrl = $window.sessionStorage.baseurl;
             return $http.get(baseUrl + '/users');
         },
