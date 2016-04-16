@@ -1,19 +1,11 @@
-# Starter files for MP4
+# Task Manager
 
-## Setup
-Use the following commands in your vagrant development environment to get this up and running
-```
-git clone https://github.com/uiuc-web-programming/mp4_client_starter.git
-cd mp4_client_starter
-npm install
-bower install
-grunt compass
-grunt uglify
-grunt
-```
+## Screentshots
 
-You can leave this command running in the background while development for livereloading:
+#![UserList](https://github.com/zenithanu/TaskManager_Client/blob/master/ScreenShots/UserList.png)
 
-```bash
-grunt
-```
+#![TaskList](https://github.com/zenithanu/TaskManager_Client/blob/master/ScreenShots/TaskList.png)
+
+#![UserDetail](https://github.com/zenithanu/TaskManager_Client/blob/master/ScreenShots/UserDetail.png)
+
+#![TaskDetail](https://github.com/zenithanu/TaskManager_Client/blob/master/ScreenShots/TaskDetail.png)
