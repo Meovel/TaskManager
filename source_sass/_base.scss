@@ -92,3 +92,21 @@ h5 {
     }
   }
 }
+
+#editTask {
+  .body {
+    width: 80%;
+    margin-left: 10%;
+
+    .note {
+      float: right;
+      font-style: italic;
+    }
+
+    .submitbtn {
+      margin-left:47%;
+      margin-right:50%;
+      position: relative;
+    }
+  }
+}

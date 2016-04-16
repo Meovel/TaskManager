@@ -1,0 +1,25 @@
+<div id="editTask">
+    <h1 >Edit Task</h1>
+    <hr />
+
+    <div class="body">
+        <form ng-submit="submitForm()">
+            <input type="text" required name="name" placeholder="Name *" ng-model="newTask.name">
+
+            <input type="date" required name="deadline" placeholder="Deadline *" ng-model="newTask.deadline">
+
+            <textarea name="description" placeholder="Description" ng-model="newTask.description"></textarea>
+
+            <label>
+                <span>Assigned User</span>
+                <select ng-model="assignedUser" ng-options="e as e.name for e in userList"></select>
+            </label>
+            <br />
+            <span class="note">field with * must be completed</span>
+            <button type="submit" class="button submitbtn">Confirm</button>
+        </form>
+    </div>
+
+    <div ng-hide="oldTask">Cannot find this task</div>
+
+</div>

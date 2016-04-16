@@ -48,6 +48,10 @@ mp4Services.factory('Tasks', function($http, $window) {
         delete: function(id) {
             var baseUrl = $window.sessionStorage.baseurl;
             return $http.delete(baseUrl + '/tasks/' + id);
+        },
+        update: function(id, data) {
+            var baseUrl = $window.sessionStorage.baseurl;
+            return $http.put(baseUrl + '/tasks/' + id, data);
         }
     };
 });
