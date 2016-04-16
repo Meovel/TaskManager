@@ -1,5 +1,7 @@
 # Task Manager
 
+Built with MEAN stack, can retrieve and manage users and their associated tasks
+
 ## Screentshots
 
 #![UserList](https://github.com/zenithanu/TaskManager_Client/blob/master/ScreenShots/UserList.png)
