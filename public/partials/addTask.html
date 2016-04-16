@@ -6,7 +6,7 @@
         <form ng-submit="submitForm()">
             <input type="text" required name="name" placeholder="Name *" ng-model="task.name">
 
-            <input type="text" required datepicker name="deadline" placeholder="Deadline *" ng-model="task.deadline">
+            <input type="date" required name="deadline" placeholder="Deadline *" ng-model="task.deadline">
 
             <textarea name="description" placeholder="Description" ng-model="task.description"></textarea>
 
